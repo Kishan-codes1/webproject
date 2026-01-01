@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sweet Crumbs Bakery</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header>
+  <h1>Sweet Crumbs Bakery</h1>
+  <nav>
+    <a href="#" onclick="showSection('home'); setActive(this)" class="active">Home</a>
+    <a href="#" onclick="showSection('products'); setActive(this)">Order Now</a>
+    <a href="#" onclick="showSection('cart'); setActive(this)">Cart (<span id="cartCount">0</span>)</a>
+    <a href="#" onclick="showSection('contact'); setActive(this)">Contact</a>
+    <a href="#" onclick="showSection('feedback'); setActive(this)">Feedback</a>
+    <a href="#" onclick="showSection('login'); setActive(this)">Login</a>
+  </nav>
+  <div id="cartMessage"></div>
+</header>
+
+<main>
+  <section id="home" class="active section">
+    <h2>Freshly Baked Happiness 🍰</h2>
+    <p>Every loaf, every cake — baked with heart.</p>
+    <button onclick="showSection('products')">Order Now</button>
+  </section>
+
+  <section id="products" class="section">
+    <h2>Our Menu</h2>
+    <div class="products">
+      <div class="card">
+        <img src="images/chocolate-cake.jpg" alt="Chocolate Cake" />
+        <h3>Chocolate Cake</h3>
+        <p>₹500</p>
+        <button onclick="addToCart('Chocolate Cake',500)">Add to Cart</button>
+      </div>
+      <div class="card">
+        <img src="images/croissant.jpg" alt="Butter Croissant" />
+        <h3>Butter Croissant</h3>
+        <p>₹120</p>
+        <button onclick="addToCart('Butter Croissant',120)">Add to Cart</button>
+      </div>
+      <div class="card">
+        <img src="images/muffin.jpg" alt="Blueberry Muffin" />
+        <h3>Blueberry Muffin</h3>
+        <p>₹150</p>
+        <button onclick="addToCart('Blueberry Muffin',150)">Add to Cart</button>
+      </div>
+      <div class="card">
+        <img src="images/donut.jpg" alt="Glazed Donut" />
+        <h3>Glazed Donut</h3>
+        <p>₹80</p>
+        <button onclick="addToCart('Glazed Donut',80)">Add to Cart</button>
+      </div>
+      <div class="card">
+        <img src="images/bread.jpg" alt="Fresh Bread" />
+        <h3>Fresh Bread Loaf</h3>
+        <p>₹60</p>
+        <button onclick="addToCart('Fresh Bread Loaf',60)">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="cart" class="section">
+    <h2>Your Cart</h2>
+    <table>
+      <thead>
+        <tr><th>Item</th><th>Quantity</th><th>Price</th><th>Actions</th></tr>
+      </thead>
+      <tbody id="cartItems"></tbody>
+    </table>
+    <h3>Total: ₹<span id="total">0</span></h3>
+    <button onclick="checkout()">Checkout</button>
+  </section>
+
+  <section id="contact" class="section">
+    <h2>Contact Us</h2>
+    <p>📍 Main Street Bakery</p>
+    <p>📞 9876543210</p>
+  </section>
+
+  <section id="feedback" class="section">
+    <h2>Customer Feedback ⭐</h2>
+    <form id="feedbackForm">
+      <label>Your Name</label>
+      <input type="text" id="fname" required />
+
+      <label>Your Feedback</label>
+      <textarea id="fmsg" rows="4" required></textarea>
+
+      <label>Rate Us</label>
+      <div class="rating">
+        <span onclick="rate(1)">★</span>
+        <span onclick="rate(2)">★</span>
+        <span onclick="rate(3)">★</span>
+        <span onclick="rate(4)">★</span>
+        <span onclick="rate(5)">★</span>
+      </div>
+
+      <input type="hidden" id="ratingValue" />
+
+      <button type="submit">Submit Feedback</button>
+    </form>
+    <p id="feedbackMsg"></p>
+  </section>
+
+  <section id="login" class="section" style="max-width: 400px; margin: 40px auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; display:none;">
+    <h2>Login to Sweet Crumbs</h2>
+    <form id="loginForm">
+      <label for="username">Username</label>
+      <input type="text" id="username" required placeholder="Enter username" />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" required placeholder="Enter password" />
+
+      <button type="submit">Login</button>
+    </form>
+    <p id="loginMsg"></p>
+  </section>
+</main>
+
+<script src="js/script.js"></script>
+</body>
+</html>
