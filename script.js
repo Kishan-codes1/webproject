@@ -1,153 +1,93 @@
-// ========== STATE ==========
+// ===== STATE =====
 let cart = [];
 
-// ========== NAVIGATION ==========
+// ===== NAVIGATION =====
 function showSection(id) {
-  document.querySelectorAll('main .section').forEach(section => {
-    section.classList.remove('active');
-  });
-  const sec = document.getElementById(id);
-  if (sec) sec.classList.add('active');
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
 
-function setActive(element) {
-  document.querySelectorAll('header nav a')
-    .forEach(link => link.classList.remove('active'));
-  element.classList.add('active');
+function setActive(el) {
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
 }
 
-// ========== CART FUNCTIONS ==========
+// ===== CART =====
 function updateCartCount() {
-  const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-  document.getElementById('cartCount').innerText = count;
+  document.getElementById('cartCount').innerText =
+    cart.reduce((sum, i) => sum + i.quantity, 0);
 }
 
 function renderCart() {
-  const cartItems = document.getElementById('cartItems');
-  cartItems.innerHTML = '';
+  const tbody = document.getElementById('cartItems');
+  tbody.innerHTML = '';
 
-  cart.forEach((item, index) => {
-    const row = document.createElement('tr');
-
-    row.innerHTML = `
-      <td>
-        <img src="${item.image}" width="50" height="50" style="border-radius:6px;">
-      </td>
-      <td>${item.name}</td>
-      <td>${item.quantity}</td>
-      <td>₹${item.price * item.quantity}</td>
-      <td>
-        <button onclick="changeQuantity(${index}, -1)">-</button>
-        <button onclick="changeQuantity(${index}, 1)">+</button>
-      </td>
-    `;
-
-    cartItems.appendChild(row);
+  cart.forEach((item, i) => {
+    tbody.innerHTML += `
+      <tr>
+        <td><img src="${item.image}" width="50"></td>
+        <td>${item.name}</td>
+        <td>${item.quantity}</td>
+        <td>₹${item.price * item.quantity}</td>
+        <td>
+          <button onclick="changeQuantity(${i},1)">+</button>
+          <button onclick="changeQuantity(${i},-1)">-</button>
+        </td>
+      </tr>`;
   });
 
-  const totalPrice = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity, 0
-  );
+  document.getElementById('total').innerText =
+    cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
 
-  document.getElementById('total').innerText = totalPrice;
   updateCartCount();
 }
 
-// ✅ FIXED addToCart (GLOBAL, NOT NESTED)
 function addToCart(name, price, image) {
-  const existing = cart.find(item => item.name === name);
-
-  if (existing) {
-    existing.quantity++;
-  } else {
-    cart.push({
-      name: name,
-      price: price,
-      image: image,
-      quantity: 1
-    });
-  }
-
+  const item = cart.find(i => i.name === name);
+  if (item) item.quantity++;
+  else cart.push({ name, price, image, quantity: 1 });
   renderCart();
 }
 
-// Change quantity
-function changeQuantity(index, amount) {
-  cart[index].quantity += amount;
-
-  if (cart[index].quantity <= 0) {
-    cart.splice(index, 1);
-  }
-
+function changeQuantity(i, amt) {
+  cart[i].quantity += amt;
+  if (cart[i].quantity <= 0) cart.splice(i, 1);
   renderCart();
 }
 
-// Checkout
 function checkout() {
-  if (cart.length === 0) {
-    alert('Your cart is empty!');
-    return;
-  }
-
-  alert('Thank you for your order! Total: ₹' + document.getElementById('total').innerText);
+  alert("Order placed! Total ₹" + document.getElementById('total').innerText);
   cart = [];
   renderCart();
-  showSection('home');
 }
 
-// ========== FEEDBACK ==========
-function rate(star) {
-  document.getElementById("ratingValue").value = star;
-}
-
+// ===== LOGIN =====
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("feedbackForm").addEventListener("submit", e => {
+  const form = document.getElementById("loginForm");
+  const msg = document.getElementById("loginMsg");
+
+  form.addEventListener("submit", e => {
     e.preventDefault();
-
-    const name = document.getElementById("fname").value;
-    const message = document.getElementById("fmsg").value;
-    const rating = document.getElementById("ratingValue").value;
-
-    if (!rating) {
-      alert("Select rating");
-      return;
+    if (username.value === "admin" && password.value === "sweet123") {
+      msg.style.color = "green";
+      msg.textContent = "Login successful!";
+      localStorage.setItem("loggedIn", "true");
+      showSection("home");
+    } else {
+      msg.style.color = "red";
+      msg.textContent = "Invalid credentials";
     }
-
-    fetch("http://localhost:3000/submit-feedback", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, message, rating })
-    })
-    .then(res => res.text())
-    .then(data => {
-      document.getElementById("feedbackMsg").innerText = data;
-      e.target.reset();
-      document.getElementById("ratingValue").value = "";
-    });
   });
-});
 
-// ========== LOGIN ==========
-document.getElementById('loginForm').addEventListener('submit', e => {
-  e.preventDefault();
-
-  const username = document.getElementById('username').value.trim();
-  const password = document.getElementById('password').value.trim();
-  const loginMsg = document.getElementById('loginMsg');
-
-  if (username === 'admin' && password === 'sweet123') {
-    loginMsg.style.color = 'green';
-    loginMsg.innerText = `Login successful! Welcome, ${username} 🙂`;
-    e.target.reset();
-  } else {
-    loginMsg.style.color = 'red';
-    loginMsg.innerText = 'Invalid username or password.';
+  if (localStorage.getItem("loggedIn") !== "true") {
+    showSection("login");
   }
 });
 
-// Set initial active nav
-document.addEventListener('DOMContentLoaded', () => {
-  setActive(document.querySelector('header nav a'));
-});
+function logout() {
+  localStorage.removeItem("loggedIn");
+  showSection("login");
+}
+
 
 
