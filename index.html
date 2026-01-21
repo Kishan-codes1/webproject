@@ -28,6 +28,7 @@
     <button onclick="showSection('products')">Order Now</button>
   </section>
 
+  
   <section id="products" class="section">
     <h2>Our Menu</h2>
     <div class="products">
@@ -35,31 +36,34 @@
         <img src="images/chocolate-cake.jpg" alt="Chocolate Cake" />
         <h3>Chocolate Cake</h3>
         <p>₹500</p>
-        <button onclick="addToCart('Chocolate Cake',500)">Add to Cart</button>
+       <button onclick="addToCart('Chocolate Cake', 500, 'images/chocolate-cake.jpg')">
+  Add to Cart
+</button>
+
       </div>
       <div class="card">
         <img src="images/croissant.jpg" alt="Butter Croissant" />
         <h3>Butter Croissant</h3>
         <p>₹120</p>
-        <button onclick="addToCart('Butter Croissant',120)">Add to Cart</button>
+        <button onclick="addToCart('Butter Croissant',120,'images/croissant.jpg')">Add to Cart</button>
       </div>
       <div class="card">
         <img src="images/muffin.jpg" alt="Blueberry Muffin" />
         <h3>Blueberry Muffin</h3>
         <p>₹150</p>
-        <button onclick="addToCart('Blueberry Muffin',150)">Add to Cart</button>
+        <button onclick="addToCart('Blueberry Muffin',150,'images/muffin.jpg')">Add to Cart</button>
       </div>
       <div class="card">
         <img src="images/donut.jpg" alt="Glazed Donut" />
         <h3>Glazed Donut</h3>
         <p>₹80</p>
-        <button onclick="addToCart('Glazed Donut',80)">Add to Cart</button>
+        <button onclick="addToCart('Glazed Donut',80,'images/donut.jpg')">Add to Cart</button>
       </div>
       <div class="card">
         <img src="images/bread.jpg" alt="Fresh Bread" />
         <h3>Fresh Bread Loaf</h3>
         <p>₹60</p>
-        <button onclick="addToCart('Fresh Bread Loaf',60)">Add to Cart</button>
+        <button onclick="addToCart('Fresh Bread Loaf',60,'images/bread.jpg')">Add to Cart</button>
       </div>
     </div>
   </section>
@@ -68,7 +72,14 @@
     <h2>Your Cart</h2>
     <table>
       <thead>
-        <tr><th>Item</th><th>Quantity</th><th>Price</th><th>Actions</th></tr>
+        <tr>
+  <th>Image</th>
+  <th>Item</th>
+  <th>Quantity</th>
+  <th>Price</th>
+  <th>Actions</th>
+  </tr>
+
       </thead>
       <tbody id="cartItems"></tbody>
     </table>
