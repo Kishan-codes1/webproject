@@ -198,4 +198,43 @@ button[onclick="checkout()"] {
     margin-top: 20px;
     cursor: pointer;
 }
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.contact-item {
+    padding: 20px;
+    background: #fdf2f2;
+    border-radius: 12px;
+    border: 1px solid #f8d7da;
+    transition: transform 0.3s;
+}
+
+.contact-item:hover {
+    transform: translateY(-5px);
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(230, 57, 70, 0.1);
+}
+
+.contact-item h3 {
+    color: #e63946;
+    margin-bottom: 10px;
+}
+
+.contact-item p {
+    margin: 5px 0;
+    color: #444;
+    font-weight: 500;
+}
+
+.social-links {
+    margin-top: 40px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    color: #777;
+}
 
